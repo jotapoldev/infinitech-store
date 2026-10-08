@@ -116,7 +116,9 @@ Un campo `secciones` de tipo *blocks*. El admin agrega, quita, reordena y edita 
 | `catalogo` | título, categorías a mostrar (vacío = todas), destacados primero sí/no |
 | `cierre` | título, texto, botón `{ texto, destino }` |
 
-Bloques iniciales, en este orden: `heroVideo`, `historiaBocina`, `loNuevo`, `catalogo`, `cierre`.
+Bloques iniciales, en este orden: `heroVideo`, `loNuevo`, `catalogo`, `cierre`.
+
+**Pospuesto (decisión 2026-10-07):** la historia de la bocina que se arma con el scroll (`historiaBocina`) se quitó del mockup y se retoma más adelante. El renderer quedó en el commit `fa306be` (archivos `HistoriaBocina.tsx` y `lib/torno.ts` antes de borrarse).
 
 ## 4. La tienda
 
