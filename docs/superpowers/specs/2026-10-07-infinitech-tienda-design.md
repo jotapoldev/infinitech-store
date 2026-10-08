@@ -1,7 +1,7 @@
 # Infinitech: tienda en línea y admin
 
 - **Fecha:** 2026-10-07
-- **Estado:** diseño aprobado por partes en el chat; pendiente de revisión del documento completo
+- **Estado:** aprobado (2026-10-07)
 - **Diseño visual de origen:** canvas "Infinitech Tienda" (https://claude.ai/artifact/1KMcBQmW4WoyhY5HpNyBmf)
 - **Referencias de estilo:** skill `apple-design` (copia en `docs/referencias/apple-design-SKILL.md`) y el índice de Apple HIG en https://designsystems.surf/design-systems/apple
 
@@ -65,6 +65,7 @@ Todos los precios van como **enteros en centavos de USD** (`2499` = $24.99).
 | `especificaciones` | lista de `{ clave, valor }` | opcional |
 | `variantes` | lista de `{ nombre, color (hex), fotos (opcional), disponibilidad }` | opcional; **el precio es el del producto**, igual para todas |
 | `disponibilidad` | disponible / agotado / por encargo | se usa si el producto no tiene variantes |
+| `tiempoEncargo` | texto corto, opcional | ej. "5 a 7 días"; se muestra si está por encargo |
 | `destacado` | sí/no | aparece primero en el catálogo |
 | estado | borrador / publicado (drafts de Payload) | la tienda solo lee publicados |
 
@@ -100,7 +101,7 @@ Autenticación de Payload. Roles:
 
 ### Ajustes (global)
 
-`whatsapp` (número en formato internacional), `plantillaMensaje`, `redes` (lista de links), `aviso` (texto opcional en una barra superior).
+`whatsapp` (número en formato internacional), `plantillaMensaje`, `redes` (lista de links), `aviso` (texto opcional en una barra superior), `mantenimiento` (sí/no) y `mensajeMantenimiento`.
 
 ### Inicio (global, armable con bloques)
 
@@ -184,6 +185,38 @@ Sale del canvas, combinando la propuesta B (bocina) y la C (video):
 - **Si el video o el modelo 3D fallan:** se muestra la imagen de respaldo.
 - **Validaciones en el admin** (sección 3): no se puede publicar un producto sin precio válido, sin foto o sin `alt`, ni un archivo que exceda el tamaño.
 - Mensajes de error específicos: cada uno dice qué falló y cómo arreglarlo.
+
+### 6.1 Páginas de error
+
+Un solo componente `PaginaEstado` (código, título, texto, ilustración y acciones) con el estilo de la tienda: fondo oscuro, la bocina en wireframe como ilustración y botones reales. Cada código tiene su ilustración y su texto:
+
+| Código | Cuándo | Texto principal | Acciones |
+| --- | --- | --- | --- |
+| 404 | ruta, producto o categoría que no existe o no está publicada (`not-found.tsx`) | "Este producto se nos perdió." | Ver catálogo · Ir al inicio |
+| 403 | acceso a una ruta restringida (por ejemplo `/api/revalidate` desde el navegador sin secreto, o una IP bloqueada) | "No tenés acceso a esta página." | Ir al inicio |
+| 429 | demasiados intentos en `/api/pedidos` | "Fueron muchos intentos seguidos. Esperá un minuto y volvé a intentarlo." | Reintentar (se activa al terminar la cuenta regresiva) |
+| 500 | error inesperado al generar una página (`error.tsx` y `global-error.tsx`) | "Algo falló de nuestro lado." | Reintentar · Escribinos por WhatsApp |
+| 503 | modo mantenimiento, activable desde Ajustes (`mantenimiento: sí/no` + mensaje) | el mensaje del admin | Escribinos por WhatsApp |
+| sin conexión | el navegador pierde la red al pedir | "Parece que no tenés internet." | Reintentar |
+
+Las rutas de API responden JSON con `{ error: { codigo, mensaje } }` y el código HTTP correcto. La tienda traduce ese JSON a la pantalla o al aviso que corresponda. El admin usa las pantallas de error de Payload.
+
+### 6.2 Estados vacíos y especiales
+
+Cada uno con ilustración propia, un texto que explica qué pasa y una acción concreta:
+
+| Lugar | Estado | Qué se muestra |
+| --- | --- | --- |
+| Carrito | vacío | "Tu carrito está vacío." + Ver productos |
+| Catálogo / categoría | sin productos publicados | "Todavía no hay productos en {categoría}." + Ver todas las categorías |
+| Catálogo | sin productos en toda la tienda | "Estamos preparando el catálogo." + WhatsApp |
+| Lo nuevo | sin artes activas | el bloque no se muestra |
+| Producto | agotado | badge "Agotado", botón deshabilitado con texto "Avisame cuando llegue" que abre WhatsApp |
+| Producto | por encargo | badge "Por encargo" y el tiempo estimado si el admin lo indica |
+| Variante | agotada | la opción se ve tachada y no se puede elegir |
+| Pedido | enviado | pantalla de confirmación con el número de pedido y "Te escribimos por WhatsApp para coordinar la entrega." |
+| Carga | mientras llega contenido | esqueletos con la forma de las tarjetas, sin spinners |
+| Inicio | sin bloques publicados | catálogo directo, para que la tienda nunca quede en blanco |
 
 ## 7. Pruebas
 
