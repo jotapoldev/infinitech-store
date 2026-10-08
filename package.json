@@ -6,5 +6,8 @@
     "dev:admin": "pnpm --filter admin dev",
     "dev:tienda": "pnpm --filter tienda dev",
     "test": "pnpm -r --if-present test:unit"
+  },
+  "devDependencies": {
+    "railway": "^3.13.0"
   }
 }
