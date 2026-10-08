@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+@theme {
+  --color-fondo: #0a0a0a;
+  --color-tarjeta: #141418;
+  --color-superficie: #21223f;
+  --color-texto: #f8f7f9;
+  --color-acento: #7846d6;
+  --color-acento-claro: #c7b3f5;
+  --color-acento-medio: #9d78ec;
+  --font-display: var(--font-archivo), "Archivo Black", system-ui, sans-serif;
+  --font-sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  --alto-header: 146px; /* logo + barra de categorías */
+}
+
+body {
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Feedback en el press, instantáneo (skill apple-design §1) */
+.presionable {
+  transition: transform 100ms ease-out, background-color 150ms ease;
+}
+.presionable:active {
+  transform: scale(0.97);
+}
+
+/* Material translúcido: header, barra y carrito */
+.material {
+  background: rgb(10 10 10 / 0.62);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+}
+
+.sin-scrollbar {
+  scrollbar-width: none;
+}
+.sin-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.titulo-display {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .presionable,
+  .presionable:active {
+    transition: none;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .material {
+    background: #0a0a0a;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .material {
+    background: #0a0a0a;
+    border-color: rgb(248 247 249 / 0.6) !important;
+  }
+}

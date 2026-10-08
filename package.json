@@ -1,0 +1,10 @@
+{
+  "name": "infinitech",
+  "private": true,
+  "packageManager": "pnpm@12.3.4",
+  "scripts": {
+    "dev:admin": "pnpm --filter admin dev",
+    "dev:tienda": "pnpm --filter tienda dev",
+    "test": "pnpm -r --if-present test:unit"
+  }
+}
