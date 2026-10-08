@@ -14,7 +14,6 @@
 
 html {
   scroll-behavior: smooth;
-  --alto-header: 146px; /* logo + barra de categorías */
 }
 
 body {

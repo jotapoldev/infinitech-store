@@ -1,7 +1,6 @@
 import { Catalogo } from "@/components/Catalogo";
 import { Header } from "@/components/Header";
 import { HeroVideo } from "@/components/HeroVideo";
-import { HistoriaBocina } from "@/components/HistoriaBocina";
 import { LoNuevo } from "@/components/LoNuevo";
 import { Cierre, Pie } from "@/components/Pie";
 
@@ -12,7 +11,6 @@ export default function Inicio() {
       <Header />
       <main>
         <HeroVideo />
-        <HistoriaBocina />
         <LoNuevo />
         <Catalogo />
         <Cierre />

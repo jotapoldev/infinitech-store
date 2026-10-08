@@ -71,13 +71,6 @@ export const ARTES: Arte[] = [
   { id: 5, etiqueta: "Promoción", titulo: "Carga rápida", producto: "cargador-carga-rapida" },
 ];
 
-export const PASOS_BOCINA = [
-  { titulo: "Todo empieza con una curva", texto: "Trazamos el perfil de la bocina. El área bajo esa curva define su forma.", formula: "r = f(y)" },
-  { titulo: "La hacemos girar", texto: "Al rotar la curva 360° sobre su eje nace un sólido de revolución.", formula: "V = π ∫ f(y)² dy" },
-  { titulo: "Le damos vida", texto: "Rejilla, anillo de luz y acabados con la paleta Infinitech." },
-  { titulo: "Sonido sin límites", texto: "Así se ve la tecnología cuando se diseña con intención. Encuentra la tuya." },
-];
-
 export const AJUSTES = {
   whatsapp: "50300000000", // ejemplo: el real viene de Ajustes en el admin
 };
