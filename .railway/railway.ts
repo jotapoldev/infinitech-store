@@ -7,6 +7,8 @@ export default defineRailway(() => {
     build: "pnpm --filter tienda build",
     start: "pnpm --filter tienda start",
     healthcheck: "/",
+    // Duerme sin tráfico para no gastar; la primera visita tarda unos segundos en despertarlo.
+    deploy: { sleepApplication: true },
   });
 
   return project("infinitech-mockup", {
