@@ -12,10 +12,20 @@ type Paso = "lista" | "datos" | "enviado";
 type Errores = Partial<Record<"nombre" | "telefono" | "zona", string>>;
 
 // Validación en línea: un mensaje por campo, que dice qué falta y cómo arreglarlo.
+// Teléfono de El Salvador: 8 dígitos. Si el autocompletado trae +503, se quita.
+function soloDigitos(v: string) {
+  const d = v.replace(/\D/g, "");
+  return (d.length > 8 && d.startsWith("503") ? d.slice(3) : d).slice(0, 8);
+}
+const conMascara = (v: string) => {
+  const d = soloDigitos(v);
+  return d.length > 4 ? `${d.slice(0, 4)}-${d.slice(4)}` : d;
+};
+
 function validar(d: { nombre: string; telefono: string; zona: string }): Errores {
   const e: Errores = {};
   if (d.nombre.trim().length < 2) e.nombre = "Escribí tu nombre para saber a quién le entregamos.";
-  const dig = d.telefono.replace(/\D/g, "");
+  const dig = soloDigitos(d.telefono);
   if (!dig) e.telefono = "Escribí tu teléfono para coordinar la entrega.";
   else if (!/^[267]\d{7}$/.test(dig)) e.telefono = "El teléfono tiene 8 dígitos y empieza con 2, 6 o 7. Ejemplo: 7777-8888.";
   if (d.zona.trim().length < 3) e.zona = "Decinos el municipio o la colonia para calcular la entrega.";
@@ -63,7 +73,11 @@ export function Carrito() {
       lineas.map((l) => ({ nombre: l.p.nombre, variante: l.variante, cantidad: l.cantidad, precio: l.p.precio })),
       datos,
     );
-    window.open(enlaceWhatsapp(AJUSTES.whatsapp, mensaje), "_blank", "noreferrer");
+    // En iOS Safari puede bloquear la pestaña nueva: entonces se abre WhatsApp en la misma.
+    const url = enlaceWhatsapp(AJUSTES.whatsapp, mensaje);
+    const pestana = window.open(url, "_blank");
+    if (pestana) pestana.opener = null;
+    else window.location.assign(url);
     setNumero(n);
     setPaso("enviado");
     vaciar();
@@ -189,7 +203,14 @@ export function Carrito() {
                       value={datos[k]}
                       aria-invalid={!!errores[k]}
                       aria-describedby={errores[k] ? `e-${k}` : undefined}
-                      onChange={(e) => setDatos({ ...datos, [k]: e.target.value })}
+                      inputMode={k === "telefono" ? "numeric" : undefined}
+                      placeholder={k === "telefono" ? "7777-8888" : undefined}
+                      onChange={(e) => {
+                        const nuevos = { ...datos, [k]: k === "telefono" ? conMascara(e.target.value) : e.target.value };
+                        setDatos(nuevos);
+                        // Si el campo ya tenía error, se revalida mientras escribe: el error se va apenas queda bien.
+                        if (errores[k]) setErrores((prev) => ({ ...prev, [k]: validar(nuevos)[k] }));
+                      }}
                       onBlur={() => setErrores((prev) => ({ ...prev, [k]: validar(datos)[k] }))}
                       className={campo}
                     />
