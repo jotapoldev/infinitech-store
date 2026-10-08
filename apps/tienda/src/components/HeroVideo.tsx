@@ -12,7 +12,7 @@ export function HeroVideo() {
         <p className="text-[19px] text-white/72">Audífonos, bocinas y accesorios para cada momento.</p>
       </div>
       <div className="-mt-4 flex justify-center px-4">
-        <div className="relative aspect-[1200/1382] w-full max-w-[600px] [mask-image:radial-gradient(closest-side,#000_62%,rgba(0,0,0,0.6)_80%,transparent_100%)]">
+        <div className="relative aspect-[1200/1382] w-full max-w-[600px] [mask-image:radial-gradient(closest-side,#000_82%,transparent_100%)]">
           {/* Sin audio, en loop. Con "reducir movimiento" se muestra la imagen fija. */}
           <video
             className="absolute inset-0 size-full object-cover motion-reduce:hidden"
