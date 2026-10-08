@@ -7,7 +7,7 @@ export function HeroVideo() {
     <section aria-labelledby="hero-titulo" className="overflow-hidden">
       <div className="mx-auto flex max-w-[1200px] flex-col items-center gap-4 px-4 pt-12 text-center sm:px-6">
         <h1 id="hero-titulo" className="titulo-display text-[40px] sm:text-[64px]">
-          Escucha <span className="text-acento-medio">sin límites</span>
+          Infinitas <span className="text-acento-medio">posibilidades</span>
         </h1>
         <p className="text-[19px] text-white/72">Audífonos, bocinas y accesorios para cada momento.</p>
       </div>
