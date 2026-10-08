@@ -72,7 +72,7 @@ export const ARTES: Arte[] = [
 ];
 
 export const AJUSTES = {
-  whatsapp: "50300000000", // ejemplo: el real viene de Ajustes en el admin
+  whatsapp: "50379295020", // con el admin, viene de Ajustes
 };
 
 export const categoriaDe = (slug: string) => CATEGORIAS.find((c) => c.slug === slug);
