@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Header } from "@/components/Header";
-import { Icono } from "@/components/Icono";
 import { Pie } from "@/components/Pie";
 import { Insignia } from "@/components/TarjetaProducto";
 import { categoriaDe, PRODUCTOS, productoDe } from "@/lib/mock";
@@ -27,7 +27,7 @@ export default async function PaginaProducto({ params }: PageProps<"/p/[slug]">)
       <main className="mx-auto grid max-w-[1200px] gap-10 px-4 py-10 sm:px-6 md:grid-cols-2">
         <div className="relative grid aspect-square place-items-center overflow-hidden rounded-[32px] border border-white/8 bg-superficie">
           <div className="absolute size-[70%] rounded-full bg-acento/35 blur-[60px]" aria-hidden="true" />
-          {cat && <Icono trazos={cat.icono} strokeWidth={1.5} className="relative w-1/2" />}
+          <Image src={p.imagen} alt={p.nombre} width={1000} height={1000} priority sizes="(max-width: 768px) 100vw, 600px" className="relative size-[88%] object-contain" />
           <span className="absolute top-5 right-5">
             <Insignia p={p} />
           </span>
@@ -37,7 +37,8 @@ export default async function PaginaProducto({ params }: PageProps<"/p/[slug]">)
             <Link href="/" className="hover:text-white">Inicio</Link> /{" "}
             {cat && <Link href={`/c/${cat.slug}`} className="hover:text-white">{cat.nombre}</Link>}
           </nav>
-          <h1 className="titulo-display text-[34px] sm:text-[48px]">{p.nombre}</h1>
+          <span className="text-sm tracking-wide text-acento-claro uppercase">{p.marca}</span>
+          <h1 className="titulo-display -mt-3 text-[34px] sm:text-[48px]">{p.nombre}</h1>
           <p className="text-[19px] text-white/72">{p.resumen}</p>
           <div className="flex items-baseline gap-3">
             <span className="text-[32px] font-bold">{formatearPrecio(p.precio)}</span>

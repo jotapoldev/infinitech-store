@@ -1,10 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { categoriaDe, type Producto } from "@/lib/mock";
 import { formatearPrecio } from "@/lib/precio";
 import { useCarrito } from "./carrito/CarritoProvider";
-import { Icono } from "./Icono";
 
 export function primeraVarianteDisponible(p: Producto) {
   return p.variantes?.find((v) => v.disponibilidad !== "agotado")?.nombre ?? null;
@@ -28,14 +28,16 @@ export function TarjetaProducto({ p }: { p: Producto }) {
 
   return (
     <article className="group relative flex flex-col overflow-hidden rounded-[18px] border border-white/8 bg-tarjeta transition-[transform,border-color] duration-200 hover:-translate-y-[3px] hover:border-acento/60 sm:rounded-3xl">
-      <div className="relative grid aspect-[4/3] place-items-center bg-superficie">
+      <div className="relative grid aspect-square place-items-center overflow-hidden bg-superficie">
         <span className="absolute top-3 left-3 rounded-full bg-black/50 px-2.5 py-1 text-xs text-white/80">{cat?.nombre}</span>
         <span className="absolute top-3 right-3">
           <Insignia p={p} />
         </span>
-        {cat && <Icono trazos={cat.icono} strokeWidth={2} className="w-[44%] text-texto" />}
+        <div aria-hidden="true" className="absolute size-[60%] rounded-full bg-acento/25 blur-[40px]" />
+        <Image src={p.imagen} alt={p.nombre} width={1000} height={1000} sizes="(max-width: 640px) 50vw, 300px" className="relative size-[86%] object-contain transition-transform duration-300 group-hover:scale-[1.04]" />
       </div>
       <div className="flex grow flex-col gap-1.5 p-3 sm:px-5 sm:pt-[18px] sm:pb-5">
+        <span className="text-xs tracking-wide text-acento-claro uppercase">{p.marca}</span>
         <h3 className="text-[15px] leading-snug font-semibold sm:text-[17px]">
           <Link href={`/p/${p.slug}`} className="after:absolute after:inset-0">
             {p.nombre}
