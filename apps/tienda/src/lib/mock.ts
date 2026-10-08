@@ -58,7 +58,7 @@ export const ARTES: Arte[] = [
 ];
 
 export const AJUSTES = {
-  whatsapp: "50379295020", // con el admin, viene de Ajustes
+  whatsapp: "50379165515", // temporal; el de Infinitech es 50379295020. Con el admin, viene de Ajustes
 };
 
 export const categoriaDe = (slug: string) => CATEGORIAS.find((c) => c.slug === slug);
