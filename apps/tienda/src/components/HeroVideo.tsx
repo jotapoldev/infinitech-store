@@ -16,8 +16,8 @@ export function HeroVideo() {
           {/* Sin audio, en loop. Con "reducir movimiento" se muestra la imagen fija. */}
           <video
             className="absolute inset-0 size-full object-cover motion-reduce:hidden"
-            src="/marca/audifonos.mp4"
-            poster="/marca/audifonos-poster.webp"
+            src="/marca/audifonos-v2.mp4"
+            poster="/marca/audifonos-v2.webp"
             autoPlay
             muted
             loop
@@ -25,7 +25,7 @@ export function HeroVideo() {
             preload="auto"
             aria-label="Audífonos Infinitech girando"
           />
-          <Image src="/marca/audifonos-poster.webp" alt="Audífonos Infinitech" fill priority className="hidden object-cover motion-reduce:block" />
+          <Image src="/marca/audifonos-v2.webp" alt="Audífonos Infinitech" fill priority className="hidden object-cover motion-reduce:block" />
         </div>
       </div>
     </section>
