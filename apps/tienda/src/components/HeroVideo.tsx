@@ -1,7 +1,7 @@
 import Image from "next/image";
 
-// Mockup: el "video" es la animación webp del diseño. Con el admin, el bloque heroVideo trae un mp4/webm
-// con su imagen de respaldo, y el bloque hero3D lo reemplaza por un <model-viewer>.
+// Con el admin, el bloque heroVideo trae el video y su imagen de respaldo, y el bloque hero3D
+// lo reemplaza por un <model-viewer>.
 export function HeroVideo() {
   return (
     <section aria-labelledby="hero-titulo" className="overflow-hidden">
@@ -12,8 +12,20 @@ export function HeroVideo() {
         <p className="text-[19px] text-white/72">Audífonos, bocinas y accesorios para cada momento.</p>
       </div>
       <div className="-mt-4 flex justify-center px-4">
-        <div className="relative aspect-[480/544] w-full max-w-[600px] [mask-image:radial-gradient(closest-side,#000_62%,rgba(0,0,0,0.6)_80%,transparent_100%)]">
-          <Image src="/marca/audifonos.webp" alt="Audífonos Infinitech girando" fill priority unoptimized className="object-cover" />
+        <div className="relative aspect-[1200/1382] w-full max-w-[600px] [mask-image:radial-gradient(closest-side,#000_62%,rgba(0,0,0,0.6)_80%,transparent_100%)]">
+          {/* Sin audio, en loop. Con "reducir movimiento" se muestra la imagen fija. */}
+          <video
+            className="absolute inset-0 size-full object-cover motion-reduce:hidden"
+            src="/marca/audifonos.mp4"
+            poster="/marca/audifonos-poster.webp"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            aria-label="Audífonos Infinitech girando"
+          />
+          <Image src="/marca/audifonos-poster.webp" alt="Audífonos Infinitech" fill priority className="hidden object-cover motion-reduce:block" />
         </div>
       </div>
     </section>
